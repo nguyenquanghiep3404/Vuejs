@@ -1,24 +1,9 @@
 {
   "students": [
     {
-      "name": "hiep",
+      "name": "hieprgthyju",
       "mssv": "12334",
       "id": 1
-    },
-    {
-      "name": "hiep",
-      "mssv": "12334",
-      "id": 2
-    },
-    {
-      "name": "rgethr",
-      "mssv": "tehryj",
-      "id": 3
-    },
-    {
-      "name": "trhytju",
-      "mssv": "tryntmu",
-      "id": 4
     }
   ]
 }

@@ -19,6 +19,7 @@ import FormModal from './components/FormModal.vue';
     </div> -->
     <HomeView/>
     <FormModal/>
+    
 </template>
 
 <style scoped>

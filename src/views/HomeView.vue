@@ -1,14 +1,36 @@
 <script setup>
-// import FormModal from '@/components/FormModal.vue';
+import FormEditModal from '@/components/FormEditModal.vue';
 import FormModal from '@/components/FormModal.vue';
 import TableComponent from '@/components/TableComponent.vue';
 import instanceAxios from '@/ultils/configAxios';
 import { onMounted, provide, ref } from 'vue';
   
   const students = ref();
+
+  const editIdSlected = ref('');
+
+  const handleEditStudent = async (student) =>{
+      try{
+        // isShowEditModal.value = false;
+        const editStudentResponse = await instanceAxios.put(`students/${editIdSlected.value}`, student)
+        fetchStudents();
+      }catch(error){
+        console.log('loi');
+      }
+  }
+
+  const handleEdit = (id) => {
+    editIdSlected.value = id;
+    isShowEditModal.value = true
+  }
+  const handleCloseEditModal = () =>{
+    isShowEditModal.value=false
+  }
   // const message = "home view";
   const ChamVaoNut= async (id) =>{
   try{
+    const Delete = confirm("are you sure");
+    if(!Delete) return;
     const deleteStudentResponse = await instanceAxios.delete(`students/${id}`)
     if(!deleteStudentResponse.data && deleteStudentResponse.data.length < 0){
     return; 
@@ -24,7 +46,7 @@ import { onMounted, provide, ref } from 'vue';
 }
   // provide('notification',notification)
 
-  const isShow = ref(true);
+  const isShowEditModal = ref(false);
   const fetchStudents = async () =>{
     const{data} = await instanceAxios.get('students');
   console.log(data);  
@@ -61,8 +83,10 @@ onMounted(()=>{
             <td>{{ student.name }}</td>
             <td>{{ student.mssv }}</td>
             <td><button @click="ChamVaoNut(student.id)">Xoá</button></td>
+            <button class="btn btn-primary " @click="handleEdit(student.id)">Edit</button>
           </tr>
         </tbody>
     </table>
+    <FormEditModal v-if="isShowEditModal" :isShowEditModal="isShowEditModal" :handleCloseEditModal="handleCloseEditModal" :editIdSlected="editIdSlected" @handleEditStudent="handleEditStudent"/>
   </main>
 </template>
